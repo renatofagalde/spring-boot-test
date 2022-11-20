@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -23,5 +24,12 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(()-> new NotFoundException(
                         MessageFormat.format("ID {0} não localizado",id)
                 ));
+    }
+
+    @Override
+    public List<User> findAll() {
+
+        return this.userRepository.findAll();
+
     }
 }
