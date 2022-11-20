@@ -1,6 +1,7 @@
 package br.com.likwi.api.controller.exceptions;
 
 import br.com.likwi.api.exception.NotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
