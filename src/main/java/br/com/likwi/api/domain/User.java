@@ -10,7 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode
 @Entity(name = "user")
 public class User {
 
