@@ -43,7 +43,7 @@ public class UserController {
                 this.userService.create(this.modelMapper.map(user, User.class)), UserResponse.class);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("{/{id}")
+                .path("/v1/users/{id}")
                 .buildAndExpand(userResponse.getId()).toUri();
         return ResponseEntity.created(uri).body(userResponse);
 
