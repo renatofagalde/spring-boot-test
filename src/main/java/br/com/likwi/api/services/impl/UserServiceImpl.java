@@ -1,6 +1,7 @@
 package br.com.likwi.api.services.impl;
 
 import br.com.likwi.api.domain.User;
+import br.com.likwi.api.exception.DataIntegratyViolationException;
 import br.com.likwi.api.exception.NotFoundException;
 import br.com.likwi.api.repositoy.UserRepository;
 import br.com.likwi.api.services.UserService;
@@ -20,8 +21,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Long id) {
         return this.userRepository.findById(id)
-                .orElseThrow(()-> new NotFoundException(
-                        MessageFormat.format("ID {0} não localizado",id)
+                .orElseThrow(() -> new NotFoundException(
+                        MessageFormat.format("ID {0} não localizado", id)
                 ));
     }
 
@@ -34,6 +35,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) {
+        this.findByEmail(user); //todo shoud be a templatemethod
         return this.userRepository.save(user);
+    }
+
+    private void findByEmail(User user) {
+        this.userRepository.findByEmail(user.getEmail())
+                .ifPresent(email->{
+                    throw new DataIntegratyViolationException("Email em uso");
+                });
     }
 }
