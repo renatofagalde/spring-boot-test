@@ -45,6 +45,11 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.save(user);
     }
 
+    @Override
+    public void delete(Long id) {
+        this.userRepository.deleteById(id);
+    }
+
     private void findByEmail(User user) {
         this.userRepository.findByEmail(user.getEmail())
                 .ifPresent(email -> {

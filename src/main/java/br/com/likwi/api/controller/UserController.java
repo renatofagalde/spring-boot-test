@@ -56,6 +56,13 @@ public class UserController {
 
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<UserResponse> delete(@PathVariable Long id){
+        this.userService.delete(id);
+        return ResponseEntity.noContent().build();
+
+    }
+
     private UserResponse getUserResponse(User userService) {
         UserResponse userResponse = this.modelMapper.map(
                 userService, UserResponse.class);
