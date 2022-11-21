@@ -37,7 +37,7 @@ public class LocalConfig {
     private List<User> getUsers() {
         List<User> users = new ArrayList<>();
 
-        for (int i = 0; i <= 100; i++) {
+        for (int i = 0; i <= 3; i++) {
             users.add(this.createUser());
         }
         return users;

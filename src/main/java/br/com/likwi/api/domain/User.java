@@ -4,11 +4,10 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Builder
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-@Getter
-@EqualsAndHashCode
+@AllArgsConstructor
+@Builder
 @Entity(name = "user")
 public class User {
 
