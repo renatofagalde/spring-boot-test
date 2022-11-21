@@ -39,10 +39,17 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.save(user);
     }
 
+    @Override
+    public User update(User user) {
+        this.findByEmail(user);
+        return this.userRepository.save(user);
+    }
+
     private void findByEmail(User user) {
         this.userRepository.findByEmail(user.getEmail())
-                .ifPresent(email->{
-                    throw new DataIntegratyViolationException("Email em uso");
+                .ifPresent(email -> {
+                    if (!email.getId().equals(user.getId()))
+                        throw new DataIntegratyViolationException("Email em uso");
                 });
     }
 }

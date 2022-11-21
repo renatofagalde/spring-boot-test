@@ -39,14 +39,27 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponse> create(@RequestBody UserRequest user){
-        UserResponse userResponse = this.modelMapper.map(
-                this.userService.create(this.modelMapper.map(user, User.class)), UserResponse.class);
+        UserResponse userResponse = getUserResponse(this.userService.create(this.modelMapper.map(user, User.class)));
 
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/v1/users/{id}")
                 .buildAndExpand(userResponse.getId()).toUri();
         return ResponseEntity.created(uri).body(userResponse);
 
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponse> update(@PathVariable Long id, @RequestBody UserRequest user){
+
+        user.setId(id);
+        return ResponseEntity.ok().body(getUserResponse(this.userService.update(this.modelMapper.map(user, User.class))));
+
+    }
+
+    private UserResponse getUserResponse(User userService) {
+        UserResponse userResponse = this.modelMapper.map(
+                userService, UserResponse.class);
+        return userResponse;
     }
 
 }
