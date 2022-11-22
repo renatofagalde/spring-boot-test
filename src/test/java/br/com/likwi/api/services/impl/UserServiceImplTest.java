@@ -132,7 +132,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void update() {
+    void when_update_then_return_success() {
         when(this.repository.save((any()))).thenReturn(user);
 
         User user = this.underTest.update(this.user);
@@ -143,6 +143,17 @@ class UserServiceImplTest {
         assertEquals(EMAIL,user.getEmail());
         assertEquals(SENHA,user.getPassword());
     }
+
+    @Test
+    void when_update_then_return_data_violation_exception() {
+        this.optionalUser.get().setId(2L);
+        when(this.repository.findByEmail((anyString()))).thenReturn(this.optionalUser);
+
+        assertThatThrownBy(() -> this.underTest.update(this.user))
+                .isInstanceOf(DataIntegratyViolationException.class)
+                .hasMessage(EMAIL_EM_USO);
+    }
+
 
     @Test
     void delete() {
