@@ -14,7 +14,7 @@ import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.text.MessageFormat;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -30,6 +30,8 @@ class UserServiceImplTest {
     public static final String NOME = "renato";
     public static final String EMAIL = "renato@likwi.com.br";
     public static final String SENHA = "groselha";
+    public static final String ID_NAO_LOCALIZADO = "ID não localizado";
+    public static final int INDEX_ZERO = 0;
 
 
     @InjectMocks
@@ -71,22 +73,37 @@ class UserServiceImplTest {
 
     }
 
-    @Test
+
     @DisplayName("When findbyid then return user instance")
     void when_findById_then_return_object_not_found_exception() {
 
         when(this.repository.findById(anyLong())).thenThrow(
-                new NotFoundException(MessageFormat.format("ID {0} não localizado", ID)));
+                new NotFoundException(ID_NAO_LOCALIZADO));
 
         assertThatThrownBy(() -> this.underTest.findById(ID))
-                .hasMessageContaining(MessageFormat.format("ID {0} não localizado", ID))
+                .hasMessageContaining(ID_NAO_LOCALIZADO)
                 .isInstanceOf(NotFoundException.class);
 
     }
 
+
+
     @Test
-    void findAll() {
+    void when_findAll_then_return_list_of_users() {
+        when(this.repository.findAll()).thenReturn(List.of(user));
+
+        List<User> all = this.underTest.findAll();
+
+        assertNotNull(all);
+        assertEquals(User.class,all.get(INDEX_ZERO).getClass());
+        assertEquals(ID,all.get(INDEX_ZERO).getId());
+        assertEquals(NOME,all.get(INDEX_ZERO).getName());
+        assertEquals(EMAIL,all.get(INDEX_ZERO).getEmail());
+        assertEquals(SENHA,all.get(INDEX_ZERO).getPassword());
+
     }
+
+
 
     @Test
     void create() {

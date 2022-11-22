@@ -8,7 +8,6 @@ import br.com.likwi.api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.MessageFormat;
 import java.util.List;
 
 @Service
@@ -21,9 +20,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Long id) {
         return this.userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(
-                        MessageFormat.format("ID {0} não localizado", id)
-                ));
+                .orElseThrow(() -> new NotFoundException("ID não localizado"));
     }
 
     @Override
