@@ -3,6 +3,7 @@ package br.com.likwi.api.services.impl;
 import br.com.likwi.api.controller.request.UserRequest;
 import br.com.likwi.api.controller.response.UserResponse;
 import br.com.likwi.api.domain.User;
+import br.com.likwi.api.exception.DataIntegratyViolationException;
 import br.com.likwi.api.exception.NotFoundException;
 import br.com.likwi.api.repositoy.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +22,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -115,6 +117,15 @@ class UserServiceImplTest {
         assertEquals(NOME,user.getName());
         assertEquals(EMAIL,user.getEmail());
         assertEquals(SENHA,user.getPassword());
+
+    }
+    @Test
+    void when_create_then_return_data_violation_exception() {
+        this.optionalUser.get().setId(2L);
+        when(this.repository.findByEmail((anyString()))).thenReturn(this.optionalUser);
+
+        assertThatThrownBy(() -> this.underTest.create(this.user))
+                .isInstanceOf(DataIntegratyViolationException.class);
 
     }
 
