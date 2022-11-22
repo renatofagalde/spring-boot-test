@@ -54,6 +54,8 @@ class UserServiceImplTest {
 
     private UserResponse userResponse;
 
+    public static final String EMAIL_EM_USO = "Email em uso";
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -125,12 +127,21 @@ class UserServiceImplTest {
         when(this.repository.findByEmail((anyString()))).thenReturn(this.optionalUser);
 
         assertThatThrownBy(() -> this.underTest.create(this.user))
-                .isInstanceOf(DataIntegratyViolationException.class);
-
+                .isInstanceOf(DataIntegratyViolationException.class)
+                .hasMessage(EMAIL_EM_USO);
     }
 
     @Test
     void update() {
+        when(this.repository.save((any()))).thenReturn(user);
+
+        User user = this.underTest.update(this.user);
+        assertNotNull(user);
+        assertEquals(User.class,user.getClass());
+        assertEquals(ID,user.getId());
+        assertEquals(NOME,user.getName());
+        assertEquals(EMAIL,user.getEmail());
+        assertEquals(SENHA,user.getPassword());
     }
 
     @Test

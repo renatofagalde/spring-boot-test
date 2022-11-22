@@ -14,13 +14,15 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
 
+    public static final String EMAIL_EM_USO = "Email em uso";
+    public static final String ID_NÃO_LOCALIZADO = "ID não localizado";
     @Autowired
     private UserRepository userRepository;
 
     @Override
     public User findById(Long id) {
         return this.userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("ID não localizado"));
+                .orElseThrow(() -> new NotFoundException(ID_NÃO_LOCALIZADO));
     }
 
     @Override
@@ -51,7 +53,7 @@ public class UserServiceImpl implements UserService {
         this.userRepository.findByEmail(user.getEmail())
                 .ifPresent(email -> {
                     if (!email.getId().equals(user.getId()))
-                        throw new DataIntegratyViolationException("Email em uso");
+                        throw new DataIntegratyViolationException(EMAIL_EM_USO);
                 });
     }
 }
