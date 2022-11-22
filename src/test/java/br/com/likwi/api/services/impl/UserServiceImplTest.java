@@ -20,6 +20,7 @@ import java.util.Optional;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -103,10 +104,18 @@ class UserServiceImplTest {
 
     }
 
-
-
     @Test
-    void create() {
+    void when_create_then_return_success() {
+        when(this.repository.save((any()))).thenReturn(user);
+
+        User user = this.underTest.create(this.user);
+        assertNotNull(user);
+        assertEquals(User.class,user.getClass());
+        assertEquals(ID,user.getId());
+        assertEquals(NOME,user.getName());
+        assertEquals(EMAIL,user.getEmail());
+        assertEquals(SENHA,user.getPassword());
+
     }
 
     @Test
