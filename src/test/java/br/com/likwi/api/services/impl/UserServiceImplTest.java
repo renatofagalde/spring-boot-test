@@ -21,10 +21,8 @@ import java.util.Optional;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.anyLong;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class UserServiceImplTest {
@@ -156,7 +154,14 @@ class UserServiceImplTest {
 
 
     @Test
-    void delete() {
+    void delete_with_success() {
+        when(this.repository.findById((anyLong()))).thenReturn(this.optionalUser);
+        doNothing().when(this.repository).deleteById(anyLong());
+
+        this.underTest.delete(ID);
+        //use verify to check how many times the delete method are called, because this method return nothing
+        verify(this.repository,times(1)).deleteById(anyLong());
+
     }
 
     private void startUser() {
