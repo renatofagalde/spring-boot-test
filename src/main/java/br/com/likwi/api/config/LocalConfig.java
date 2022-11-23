@@ -27,11 +27,11 @@ public class LocalConfig {
     }
 
     private User createUser() {
-        return User.builder()
-                .email(this.faker.internet().emailAddress())
-                .name(this.faker.name().fullName())
-                .password(UUID.randomUUID().toString())
-                .build();
+        return new User(
+                this.faker.name().fullName(),
+                this.faker.internet().emailAddress(),
+                UUID.randomUUID().toString());
+
     }
 
     private List<User> getUsers() {
