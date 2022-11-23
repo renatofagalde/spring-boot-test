@@ -1,16 +1,12 @@
 package br.com.likwi.api.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-@Getter
-@EqualsAndHashCode(of = "id")
+@AllArgsConstructor
 @Entity(name = "user")
 public class User {
 
@@ -25,4 +21,9 @@ public class User {
 
     private String password;
 
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 }
