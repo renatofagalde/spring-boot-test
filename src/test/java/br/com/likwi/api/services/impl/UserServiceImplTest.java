@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
@@ -40,9 +39,6 @@ class UserServiceImplTest {
 
     @Mock
     private UserRepository repository;
-
-    @Mock
-    private ModelMapper modelMapper;
 
     private User user;
 
@@ -119,6 +115,8 @@ class UserServiceImplTest {
         assertEquals(SENHA,user.getPassword());
 
     }
+
+    @SuppressWarnings("unchecked")
     @Test
     void when_create_then_return_data_violation_exception() {
         this.optionalUser.get().setId(2L);
@@ -142,6 +140,7 @@ class UserServiceImplTest {
         assertEquals(SENHA,user.getPassword());
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     void when_update_then_return_data_violation_exception() {
         this.optionalUser.get().setId(2L);
@@ -161,6 +160,17 @@ class UserServiceImplTest {
         this.underTest.delete(ID);
         //use verify to check how many times the delete method are called, because this method return nothing
         verify(this.repository,times(1)).deleteById(anyLong());
+
+    }
+
+    @Test
+    void delete_with_object_not_found() {
+        when(this.repository.findById(anyLong())).thenThrow(
+                new NotFoundException(ID_NAO_LOCALIZADO));
+
+        assertThatThrownBy(() -> this.underTest.delete(ID))
+                .hasMessageContaining(ID_NAO_LOCALIZADO)
+                .isInstanceOf(NotFoundException.class);
 
     }
 
