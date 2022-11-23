@@ -27,9 +27,9 @@ import static org.mockito.Mockito.*;
 class UserServiceImplTest {
 
     public static final long ID = 1L;
-    public static final String NOME = "renato";
+    public static final String NAME = "renato";
     public static final String EMAIL = "renato@likwi.com.br";
-    public static final String SENHA = "groselha";
+    public static final String PASSWORD = "groselha";
 
     public static final int INDEX_ZERO = 0;
     private User user;
@@ -68,7 +68,7 @@ class UserServiceImplTest {
         assertEquals(User.class, userByID.getClass());
         assertNotNull(userByID);
         assertEquals(ID, userByID.getId());
-        assertEquals(NOME, userByID.getName());
+        assertEquals(NAME, userByID.getName());
         assertEquals(EMAIL, userByID.getEmail());
 
     }
@@ -97,9 +97,9 @@ class UserServiceImplTest {
         assertNotNull(all);
         assertEquals(User.class,all.get(INDEX_ZERO).getClass());
         assertEquals(ID,all.get(INDEX_ZERO).getId());
-        assertEquals(NOME,all.get(INDEX_ZERO).getName());
+        assertEquals(NAME,all.get(INDEX_ZERO).getName());
         assertEquals(EMAIL,all.get(INDEX_ZERO).getEmail());
-        assertEquals(SENHA,all.get(INDEX_ZERO).getPassword());
+        assertEquals(PASSWORD,all.get(INDEX_ZERO).getPassword());
 
     }
 
@@ -111,9 +111,9 @@ class UserServiceImplTest {
         assertNotNull(user);
         assertEquals(User.class,user.getClass());
         assertEquals(ID,user.getId());
-        assertEquals(NOME,user.getName());
+        assertEquals(NAME,user.getName());
         assertEquals(EMAIL,user.getEmail());
-        assertEquals(SENHA,user.getPassword());
+        assertEquals(PASSWORD,user.getPassword());
 
     }
 
@@ -136,9 +136,9 @@ class UserServiceImplTest {
         assertNotNull(user);
         assertEquals(User.class,user.getClass());
         assertEquals(ID,user.getId());
-        assertEquals(NOME,user.getName());
+        assertEquals(NAME,user.getName());
         assertEquals(EMAIL,user.getEmail());
-        assertEquals(SENHA,user.getPassword());
+        assertEquals(PASSWORD,user.getPassword());
     }
 
     @SuppressWarnings("unchecked")
@@ -176,9 +176,9 @@ class UserServiceImplTest {
     }
 
     private void startUser() {
-        this.user = new User(ID, NOME, EMAIL, SENHA);
-        this.userRequest = new UserRequest(ID, NOME, EMAIL, SENHA);
-        this.userResponse = new UserResponse(ID, NOME, EMAIL, SENHA);
-        this.optionalUser = Optional.of(new User(ID, NOME, EMAIL, SENHA));
+        this.user = new User(ID, NAME, EMAIL, PASSWORD);
+        this.userRequest = new UserRequest(ID, NAME, EMAIL, PASSWORD);
+        this.userResponse = new UserResponse(ID, NAME, EMAIL, PASSWORD);
+        this.optionalUser = Optional.of(new User(ID, NAME, EMAIL, PASSWORD));
     }
 }

@@ -39,8 +39,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponse> create(@RequestBody UserRequest user){
-        UserResponse userResponse = getUserResponse(this.userService.create(this.modelMapper.map(user, User.class)));
+    public ResponseEntity<UserResponse> create(@RequestBody UserRequest userRequest){
+        UserResponse userResponse = getUserResponse(this.userService.create(this.modelMapper.map(userRequest, User.class)));
 
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/v1/users/{id}")
