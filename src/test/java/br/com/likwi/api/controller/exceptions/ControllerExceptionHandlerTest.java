@@ -1,16 +1,19 @@
 package br.com.likwi.api.controller.exceptions;
 
+import br.com.likwi.api.exception.DataIntegrityViolationException;
 import br.com.likwi.api.exception.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.time.LocalDateTime;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class ControllerExceptionHandlerTest {
@@ -35,13 +38,26 @@ class ControllerExceptionHandlerTest {
 
         assertNotNull(response);
         assertNotNull(response.getBody());
+        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
         assertEquals(ResponseEntity.class, response.getClass());
         assertEquals(DefaultError.class, response.getBody().getClass());
         assertEquals(ID_NAO_LOCALIZADO, response.getBody().getError());
         assertEquals(404,response.getBody().getStatus());
+        assertNotEquals("/user/2",response.getBody().getPath());
+        assertNotEquals(LocalDateTime.now(),response.getBody().getLocalDateTime());
     }
 
     @Test
-    void dataIntegratyViolation() {
+    void when_dataIntegrityViolation_then_() {
+        ResponseEntity<DefaultError> response = this.controllerExceptionHandler.dataIntegrityViolation(
+                new DataIntegrityViolationException(EMAIL_EM_USO), new MockHttpServletRequest());
+
+        assertNotNull(response);
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+        assertEquals(ResponseEntity.class, response.getClass());
+        assertEquals(DefaultError.class, response.getBody().getClass());
+        assertEquals(EMAIL_EM_USO, response.getBody().getError());
+        assertEquals(400,response.getBody().getStatus());
     }
 }

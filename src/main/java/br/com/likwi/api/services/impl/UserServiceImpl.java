@@ -1,7 +1,7 @@
 package br.com.likwi.api.services.impl;
 
 import br.com.likwi.api.domain.User;
-import br.com.likwi.api.exception.DataIntegratyViolationException;
+import br.com.likwi.api.exception.DataIntegrityViolationException;
 import br.com.likwi.api.exception.NotFoundException;
 import br.com.likwi.api.repositoy.UserRepository;
 import br.com.likwi.api.services.UserService;
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
         this.userRepository.findByEmail(user.getEmail())
                 .ifPresent(email -> {
                     if (!email.getId().equals(user.getId()))
-                        throw new DataIntegratyViolationException(EMAIL_EM_USO);
+                        throw new DataIntegrityViolationException(EMAIL_EM_USO);
                 });
     }
 }

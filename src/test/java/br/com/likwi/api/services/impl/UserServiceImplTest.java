@@ -3,7 +3,7 @@ package br.com.likwi.api.services.impl;
 import br.com.likwi.api.controller.request.UserRequest;
 import br.com.likwi.api.controller.response.UserResponse;
 import br.com.likwi.api.domain.User;
-import br.com.likwi.api.exception.DataIntegratyViolationException;
+import br.com.likwi.api.exception.DataIntegrityViolationException;
 import br.com.likwi.api.exception.NotFoundException;
 import br.com.likwi.api.repositoy.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -124,7 +124,7 @@ class UserServiceImplTest {
         when(this.repository.findByEmail((anyString()))).thenReturn(this.optionalUser);
 
         assertThatThrownBy(() -> this.underTest.create(this.user))
-                .isInstanceOf(DataIntegratyViolationException.class)
+                .isInstanceOf(DataIntegrityViolationException.class)
                 .hasMessage(EMAIL_EM_USO);
     }
 
@@ -148,7 +148,7 @@ class UserServiceImplTest {
         when(this.repository.findByEmail((anyString()))).thenReturn(this.optionalUser);
 
         assertThatThrownBy(() -> this.underTest.update(this.user))
-                .isInstanceOf(DataIntegratyViolationException.class)
+                .isInstanceOf(DataIntegrityViolationException.class)
                 .hasMessage(EMAIL_EM_USO);
     }
 
