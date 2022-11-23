@@ -32,11 +32,11 @@ class UserServiceImplTest {
     public static final String PASSWORD = "groselha";
 
     public static final int INDEX_ZERO = 0;
-    private User user;
+    private User user= new User();
 
     private Optional<User> optionalUser;
 
-    private UserRequest userRequest;
+    private UserRequest userRequest=new UserRequest();
 
     private UserResponse userResponse;
 
