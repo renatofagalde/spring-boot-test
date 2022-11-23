@@ -30,16 +30,8 @@ class UserServiceImplTest {
     public static final String NOME = "renato";
     public static final String EMAIL = "renato@likwi.com.br";
     public static final String SENHA = "groselha";
-    public static final String ID_NAO_LOCALIZADO = "ID não localizado";
+
     public static final int INDEX_ZERO = 0;
-
-
-    @InjectMocks
-    private UserServiceImpl underTest;
-
-    @Mock
-    private UserRepository repository;
-
     private User user;
 
     private Optional<User> optionalUser;
@@ -49,6 +41,15 @@ class UserServiceImplTest {
     private UserResponse userResponse;
 
     public static final String EMAIL_EM_USO = "Email em uso";
+
+    public static final String ID_NAO_LOCALIZADO = "ID não localizado";
+
+    @InjectMocks
+    private UserServiceImpl underTest;
+
+    @Mock
+    private UserRepository repository;
+
 
     @BeforeEach
     void setUp() {
