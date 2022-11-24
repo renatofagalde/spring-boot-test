@@ -1,17 +1,12 @@
 <p align="center">
   <a href="https://likwi.com.br">
-    <img src="https://storage.googleapis.com/golden-wind/unform/unform.svg" height="150" width="175" alt="Unform" />
+    <img src="https://s3.amazonaws.com/repositorioArquivos/likwi/likwi/site/logos+likwi/logo_v1.png" height="150" width="175" alt="Likwi" />
   </a>
 </p>
 
-<p align="center">Easy peasy highly scalable ReactJS & React Native forms! 🚀</p>
+<p align="center">🚀</p>
 
-<div align="center">
 
-[![npm](https://img.shields.io/npm/v/@unform/core.svg?color=%238257E5&style=for-the-badge)](https://www.npmjs.com/package/@unform/core)<space><space>
-[![Coverage Status](https://img.shields.io/coveralls/github/unform/unform?color=8257E5&style=for-the-badge)](https://coveralls.io/github/unform/unform?branch=main)
-
-</div>
 
 # Likwi software 
 
