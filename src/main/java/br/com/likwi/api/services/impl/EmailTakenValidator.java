@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 import static br.com.likwi.api.services.impl.UserServiceImpl.EMAIL_EM_USO;
 
 @Service
-public class EmailValidator implements Validator<User> {
+public class EmailTakenValidator implements Validator<User> {
 
     private UserRepository userRepository;
 
-    public EmailValidator(UserRepository userRepository) {
+    public EmailTakenValidator(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
