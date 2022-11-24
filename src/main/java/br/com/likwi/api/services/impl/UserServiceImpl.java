@@ -1,10 +1,10 @@
 package br.com.likwi.api.services.impl;
 
 import br.com.likwi.api.domain.User;
-import br.com.likwi.api.exception.DataIntegrityViolationException;
 import br.com.likwi.api.exception.NotFoundException;
 import br.com.likwi.api.repositoy.UserRepository;
 import br.com.likwi.api.services.UserService;
+import br.com.likwi.api.services.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,13 +34,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) {
-        this.findByEmail(user); //todo shoud be a templatemethod
+//        this.findByEmail(user); //todo shoud be a templatemethod
+        this.validate(new EmailValidator(this.userRepository), user);
         return this.userRepository.save(user);
     }
 
     @Override
     public User update(User user) {
-        this.findByEmail(user);
+        //this.findByEmail(user);
+        this.validate(new EmailValidator(this.userRepository), user);
         return this.userRepository.save(user);
     }
 
@@ -49,11 +51,17 @@ public class UserServiceImpl implements UserService {
         this.userRepository.deleteById(this.findById(id).getId());
     }
 
-    private void findByEmail(User user) {
-        this.userRepository.findByEmail(user.getEmail())
-                .ifPresent(email -> {
-                    if (!email.getId().equals(user.getId()))
-                        throw new DataIntegrityViolationException(EMAIL_EM_USO);
-                });
+    private <T> void validate(Validator<T> validator, T objeto){
+        validator.check(objeto);
     }
+
+
+
+//    private void findByEmail(User user) {
+//        this.userRepository.findByEmail(user.getEmail())
+//                .ifPresent(email -> {
+//                    if (!email.getId().equals(user.getId()))
+//                        throw new DataIntegrityViolationException(EMAIL_EM_USO);
+//                });
+//    }
 }
