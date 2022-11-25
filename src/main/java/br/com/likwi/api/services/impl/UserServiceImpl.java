@@ -32,18 +32,8 @@ public class UserServiceImpl implements UserService {
 
     }
 
-//    @Override
-//    public User create(User user) {
-//
-////        this.validate(new EmailIsOKValidator(),user);
-////        this.validate(new EmailTakenValidator(this.userRepository), user);
-////        return this.userRepository.save(user);
-//    }
-
     @Override
     public User update(User user) {
-
-//        this.validate(new EmailTakenValidator(this.userRepository), user);
         return this.userRepository.save(user);
     }
 

@@ -98,19 +98,6 @@ class UserControllerTest {
     }
 
     @Test
-    void when_create_then_return_created() {
-        when(this.service.create(any())).thenReturn(this.user);
-        when(this.modelMapper.map(this.userRequest,User.class)).thenReturn(this.user);
-        when(this.modelMapper.map(this.user,UserResponse.class)).thenReturn(this.userResponse);
-
-        ResponseEntity<UserResponse> response = this.underTest.create(this.userRequest);
-
-        assertEquals(ResponseEntity.class,response.getClass());
-        assertEquals(HttpStatus.CREATED,response.getStatusCode());
-        assertNotNull(response.getHeaders().get("Location"));
-    }
-
-    @Test
     void when_update_return_success() {
 
         when(this.service.update(any())).thenReturn(this.user);
