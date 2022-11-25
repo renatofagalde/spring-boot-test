@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public abstract class UserRules implements UserCreateService {
+public abstract class UserCreateRules extends ValidateService implements UserCreateService{
 
     @Autowired
     private UserRepository userRepository;
@@ -21,11 +21,9 @@ public abstract class UserRules implements UserCreateService {
     }
 
     private void validations(User user) {
-        this.validate(new EmailIsOKValidator(), user);
-        this.validate(new EmailTakenValidator(this.userRepository),user);
+        validate(new EmailIsOKValidator(), user);
+        validate(new EmailTakenValidator(this.userRepository),user);
     }
 
-    private <T> void validate(Validator<T> validator, T objeto) {
-        validator.check(objeto);
-    }
+
 }
