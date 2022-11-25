@@ -7,15 +7,11 @@ import br.com.likwi.api.services.impl.EmailTakenValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 public abstract class UserRules implements UserCreateService {
 
     @Autowired
     private UserRepository userRepository;
-
-    private List<Validator> validations = List.of(new EmailIsOKValidator(), new EmailTakenValidator(this.userRepository));
 
 
     @Override
