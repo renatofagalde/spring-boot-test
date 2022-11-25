@@ -5,7 +5,6 @@ import br.com.likwi.api.controller.response.UserResponse;
 import br.com.likwi.api.domain.User;
 import br.com.likwi.api.services.UserCreateService;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,11 +19,14 @@ import java.net.URI;
 public class UserCreateController {
 
     public static final String ID = "/{id}";
-    @Autowired
     private ModelMapper modelMapper;
 
-    @Autowired
     private UserCreateService userCreateService;
+
+    public UserCreateController(ModelMapper modelMapper, UserCreateService userCreateService) {
+        this.modelMapper = modelMapper;
+        this.userCreateService = userCreateService;
+    }
 
     @PostMapping
     public ResponseEntity<UserResponse> create(@RequestBody UserRequest userRequest){
