@@ -4,7 +4,6 @@ import br.com.likwi.api.domain.User;
 import br.com.likwi.api.exception.NotFoundException;
 import br.com.likwi.api.repositoy.UserRepository;
 import br.com.likwi.api.services.UserService;
-import br.com.likwi.api.services.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +18,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+
     @Override
     public User findById(Long id) {
         return this.userRepository.findById(id)
@@ -32,18 +32,18 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Override
-    public User create(User user) {
-
-        this.validate(new EmailIsOKValidator(),user);
-        this.validate(new EmailTakenValidator(this.userRepository), user);
-        return this.userRepository.save(user);
-    }
+//    @Override
+//    public User create(User user) {
+//
+////        this.validate(new EmailIsOKValidator(),user);
+////        this.validate(new EmailTakenValidator(this.userRepository), user);
+////        return this.userRepository.save(user);
+//    }
 
     @Override
     public User update(User user) {
 
-        this.validate(new EmailTakenValidator(this.userRepository), user);
+//        this.validate(new EmailTakenValidator(this.userRepository), user);
         return this.userRepository.save(user);
     }
 
@@ -52,17 +52,5 @@ public class UserServiceImpl implements UserService {
         this.userRepository.deleteById(this.findById(id).getId());
     }
 
-    private <T> void validate(Validator<T> validator, T objeto){
-        validator.check(objeto);
-    }
 
-
-
-//    private void findByEmail(User user) {
-//        this.userRepository.findByEmail(user.getEmail())
-//                .ifPresent(email -> {
-//                    if (!email.getId().equals(user.getId()))
-//                        throw new DataIntegrityViolationException(EMAIL_EM_USO);
-//                });
-//    }
 }

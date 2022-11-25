@@ -8,9 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,17 +34,6 @@ public class UserController {
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok().body(usersResponse);
-    }
-
-    @PostMapping
-    public ResponseEntity<UserResponse> create(@RequestBody UserRequest userRequest){
-        UserResponse userResponse = getUserResponse(this.userService.create(this.modelMapper.map(userRequest, User.class)));
-
-        URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/v1/users/{id}")
-                .buildAndExpand(userResponse.getId()).toUri();
-        return ResponseEntity.created(uri).body(userResponse);
-
     }
 
     @PutMapping(ID)
