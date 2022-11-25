@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) {
-//        this.findByEmail(user); //todo shoud be a templatemethod
+
         this.validate(new EmailIsOKValidator(),user);
         this.validate(new EmailTakenValidator(this.userRepository), user);
         return this.userRepository.save(user);
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) {
-        //this.findByEmail(user);
+
         this.validate(new EmailTakenValidator(this.userRepository), user);
         return this.userRepository.save(user);
     }
