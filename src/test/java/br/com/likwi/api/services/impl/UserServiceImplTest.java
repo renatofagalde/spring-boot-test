@@ -3,7 +3,6 @@ package br.com.likwi.api.services.impl;
 import br.com.likwi.api.controller.request.UserRequest;
 import br.com.likwi.api.controller.response.UserResponse;
 import br.com.likwi.api.domain.User;
-import br.com.likwi.api.exception.DataIntegrityViolationException;
 import br.com.likwi.api.exception.NotFoundException;
 import br.com.likwi.api.repositoy.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +19,8 @@ import java.util.Optional;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -104,31 +104,6 @@ class UserServiceImplTest {
     }
 
     @Test
-    void when_create_then_return_success() {
-        when(this.repository.save((any()))).thenReturn(user);
-
-        User user = this.underTest.create(this.user);
-        assertNotNull(user);
-        assertEquals(User.class,user.getClass());
-        assertEquals(ID,user.getId());
-        assertEquals(NAME,user.getName());
-        assertEquals(EMAIL,user.getEmail());
-        assertEquals(PASSWORD,user.getPassword());
-
-    }
-
-    @SuppressWarnings("unchecked")
-    @Test
-    void when_create_then_return_data_violation_exception() {
-        this.optionalUser.get().setId(2L);
-        when(this.repository.findByEmail((anyString()))).thenReturn(this.optionalUser);
-
-        assertThatThrownBy(() -> this.underTest.create(this.user))
-                .isInstanceOf(DataIntegrityViolationException.class)
-                .hasMessage(EMAIL_EM_USO);
-    }
-
-    @Test
     void when_update_then_return_success() {
         when(this.repository.save((any()))).thenReturn(user);
 
@@ -142,16 +117,6 @@ class UserServiceImplTest {
     }
 
     @SuppressWarnings("unchecked")
-    @Test
-    void when_update_then_return_data_violation_exception() {
-        this.optionalUser.get().setId(2L);
-        when(this.repository.findByEmail((anyString()))).thenReturn(this.optionalUser);
-
-        assertThatThrownBy(() -> this.underTest.update(this.user))
-                .isInstanceOf(DataIntegrityViolationException.class)
-                .hasMessage(EMAIL_EM_USO);
-    }
-
 
     @Test
     void delete_with_success() {
