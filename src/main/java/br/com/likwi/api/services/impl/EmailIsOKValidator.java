@@ -20,7 +20,7 @@ public class EmailIsOKValidator implements Validator<User> {
 
         if(!this.patternMatches(user.getEmail(),regexPattern)){
             throw new EmailException(
-                    MessageFormat.format("Email {0} is taken",user.getEmail())
+                    MessageFormat.format("Email {0} inválido",user.getEmail())
             );
         }
 
